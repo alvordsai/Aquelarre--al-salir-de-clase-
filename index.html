@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#050307" />
+  <title>Aquelarre</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #030205;
+      --hot: #ff174f;
+      --pink: #ff2d8d;
+      --deep: #9a003d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    body {
+      position: relative;
+      min-height: 100dvh;
+      isolation: isolate;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .scene {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse 75% 42% at 50% 112%,
+          rgba(255, 36, 105, 0.95) 0%,
+          rgba(241, 15, 76, 0.58) 22%,
+          rgba(145, 0, 54, 0.28) 43%,
+          rgba(35, 0, 19, 0.08) 66%,
+          rgba(0, 0, 0, 0) 78%),
+        radial-gradient(ellipse 115% 78% at 50% 112%,
+          rgba(255, 0, 72, 0.17) 0%,
+          rgba(0, 0, 0, 0) 58%),
+        linear-gradient(180deg, #010103 0%, #050208 68%, #100008 100%);
+    }
+
+    .scene::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -23vh;
+      width: min(92vw, 1100px);
+      height: 50vh;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background: rgba(255, 20, 86, 0.2);
+      filter: blur(62px);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .scene::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.42), transparent 22%, transparent 78%, rgba(0,0,0,.42)),
+        linear-gradient(180deg, rgba(0,0,0,.15), transparent 55%, rgba(0,0,0,.08));
+      pointer-events: none;
+    }
+
+    canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      mix-blend-mode: screen;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      canvas {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="scene" aria-label="Fondo oscuro con resplandor rojo y partículas ascendentes">
+    <canvas id="embers" aria-hidden="true"></canvas>
+  </main>
+
+  <script>
+    (() => {
+      const canvas = document.getElementById("embers");
+      const ctx = canvas.getContext("2d", { alpha: true });
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      const particles = [];
+      const MAX_DPR = 2;
+      let width = 0;
+      let height = 0;
+      let dpr = 1;
+      let rafId = 0;
+      let lastTime = performance.now();
+      let spawnCarry = 0;
+
+      const random = (min, max) => min + Math.random() * (max - min);
+
+      class Ember {
+        constructor(initial = false) {
+          this.reset(initial);
+        }
+
+        reset(initial = false) {
+          const centerBias = (Math.random() + Math.random() + Math.random()) / 3;
+          this.x = width * (0.08 + centerBias * 0.84);
+          this.y = initial ? random(height * 0.52, height * 1.08) : random(height * 0.94, height * 1.06);
+
+          this.radius = random(0.55, 2.35);
+          this.speedY = random(28, 95);
+          this.drift = random(-18, 18);
+          this.phase = random(0, Math.PI * 2);
+          this.wave = random(0.8, 2.3);
+          this.life = 0;
+          this.maxLife = random(2.4, 6.8);
+          this.baseAlpha = random(0.28, 0.92);
+
+          const palette = [
+            [255, 34, 92],
+            [255, 60, 127],
+            [255, 88, 146],
+            [255, 121, 158],
+            [255, 45, 72]
+          ];
+          this.color = palette[(Math.random() * palette.length) | 0];
+        }
+
+        update(dt) {
+          this.life += dt;
+          const t = this.life / this.maxLife;
+          this.y -= this.speedY * dt * (0.82 + t * 0.55);
+          this.phase += dt * this.wave;
+          this.x += (this.drift + Math.sin(this.phase) * 12) * dt;
+
+          if (this.life >= this.maxLife || this.y < -20 || this.x < -30 || this.x > width + 30) {
+            this.reset(false);
+          }
+        }
+
+        draw() {
+          const t = this.life / this.maxLife;
+          const fadeIn = Math.min(1, t * 9);
+          const fadeOut = Math.max(0, 1 - Math.pow(t, 1.7));
+          const alpha = this.baseAlpha * fadeIn * fadeOut;
+          if (alpha <= 0.01) return;
+
+          const [r, g, b] = this.color;
+          const glow = this.radius * 4.5;
+
+          const gradient = ctx.createRadialGradient(
+            this.x, this.y, 0,
+            this.x, this.y, glow
+          );
+          gradient.addColorStop(0, `rgba(${r},${g},${b},${alpha})`);
+          gradient.addColorStop(0.18, `rgba(${r},${g},${b},${alpha * 0.62})`);
+          gradient.addColorStop(1, `rgba(${r},${g},${b},0)`);
+
+          ctx.fillStyle = gradient;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, glow, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.fillStyle = `rgba(255,160,184,${Math.min(0.95, alpha * 1.08)})`;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      function desiredCount() {
+        const area = width * height;
+        return Math.max(42, Math.min(150, Math.round(area / 11500)));
+      }
+
+      function syncParticleCount() {
+        const target = desiredCount();
+        while (particles.length < target) particles.push(new Ember(true));
+        if (particles.length > target) particles.length = target;
+      }
+
+      function resize() {
+        dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
+        width = window.innerWidth;
+        height = window.innerHeight;
+
+        canvas.width = Math.max(1, Math.floor(width * dpr));
+        canvas.height = Math.max(1, Math.floor(height * dpr));
+        canvas.style.width = width + "px";
+        canvas.style.height = height + "px";
+
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        syncParticleCount();
+      }
+
+      function animate(now) {
+        const dt = Math.min(0.033, (now - lastTime) / 1000);
+        lastTime = now;
+
+        ctx.clearRect(0, 0, width, height);
+
+        for (const particle of particles) {
+          particle.update(dt);
+          particle.draw();
+        }
+
+        // Añade pequeñas chispas extra de forma irregular para evitar un patrón demasiado uniforme.
+        spawnCarry += dt * 2.6;
+        if (spawnCarry >= 1 && particles.length < 170) {
+          spawnCarry = 0;
+          const spark = new Ember(false);
+          spark.radius = random(0.35, 1.15);
+          spark.speedY *= 1.25;
+          spark.maxLife *= 0.65;
+          particles.push(spark);
+        }
+
+        if (particles.length > desiredCount() + 12) {
+          particles.splice(0, particles.length - (desiredCount() + 12));
+        }
+
+        rafId = requestAnimationFrame(animate);
+      }
+
+      function start() {
+        cancelAnimationFrame(rafId);
+        if (reducedMotion.matches) {
+          ctx.clearRect(0, 0, width, height);
+          return;
+        }
+        lastTime = performance.now();
+        rafId = requestAnimationFrame(animate);
+      }
+
+      resize();
+      start();
+
+      window.addEventListener("resize", resize, { passive: true });
+      reducedMotion.addEventListener?.("change", start);
+    })();
+  </script>
+</body>
+</html>
