@@ -85,6 +85,53 @@
       mix-blend-mode: normal;
     }
 
+
+    .topbar {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      min-height: 84px;
+      padding: calc(8px + env(safe-area-inset-top, 0px)) clamp(20px, 4vw, 64px) 8px;
+      background: rgba(0, 0, 0, 0.58);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.22);
+      -webkit-backdrop-filter: blur(18px) saturate(120%);
+      backdrop-filter: blur(18px) saturate(120%);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 6px;
+    }
+
+    .brand:focus-visible {
+      outline: 2px solid #ff650a;
+      outline-offset: 5px;
+    }
+
+    .brand img {
+      display: block;
+      width: 180px;
+      height: 66px;
+      /* Recorta el margen vacío del SVG para que el logo se lea en la barra. */
+      object-fit: cover;
+      object-position: center 54%;
+    }
+
+    @media (max-width: 600px) {
+      .topbar {
+        min-height: 72px;
+      }
+
+      .brand img {
+        width: 150px;
+        height: 56px;
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       canvas {
         display: none;
@@ -93,6 +140,11 @@
   </style>
 </head>
 <body>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="Aquelarre — inicio">
+      <img src="./Imagenes/logo_aquelarre.svg" alt="Aquelarre, al salir de clase" width="180" height="66" fetchpriority="high" />
+    </a>
+  </header>
   <main class="scene" aria-label="Fondo oscuro con resplandor rojo y partículas ascendentes">
     <canvas id="embers" aria-hidden="true"></canvas>
   </main>
