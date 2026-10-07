@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="200mm"
+   height="200mm"
+   viewBox="0 0 200 200"
+   version="1.1"
+   id="svg192"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   sodipodi:docname="logo_aquelarre.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview194"
+     pagecolor="#808080"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.104894"
+     inkscape:cx="257.94329"
+     inkscape:cy="339.39907"
+     inkscape:window-width="958"
+     inkscape:window-height="1041"
+     inkscape:window-x="-7"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs189">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient4147">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop4145" />
+      <stop
+         style="stop-color:#ff80f9;stop-opacity:1;"
+         offset="1"
+         id="stop4143" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient2629">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop2625" />
+      <stop
+         style="stop-color:#820000;stop-opacity:1;"
+         offset="1"
+         id="stop2627" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2629"
+       id="linearGradient3456"
+       gradientUnits="userSpaceOnUse"
+       x1="101.46484"
+       y1="67.953354"
+       x2="101.46484"
+       y2="99.511513"
+       gradientTransform="matrix(2.9322608,0,0,2.9322608,-212.82531,-145.12162)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4147"
+       id="linearGradient3458"
+       gradientUnits="userSpaceOnUse"
+       x1="122.42042"
+       y1="96.453964"
+       x2="122.42042"
+       y2="87.354294"
+       gradientTransform="matrix(2.9322608,0,0,2.9322608,-217.10788,-143.94241)" />
+  </defs>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g9371"
+       transform="matrix(1.0066674,0,0,1.0066674,0.01515289,-0.66675467)">
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:52.9927px;font-family:'Bastille Vredeburg Demo';-inkscape-font-specification:'Bastille Vredeburg Demo';text-align:center;text-anchor:middle;fill:url(#linearGradient3456);fill-opacity:1;stroke:#ffffff;stroke-width:2.93226;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+         x="78.702156"
+         y="111.30753"
+         id="text367-9-2-4"><tspan
+           sodipodi:role="line"
+           id="tspan365-8-9-8"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Bastille Vredeburg Demo';-inkscape-font-specification:'Bastille Vredeburg Demo';fill:url(#linearGradient3456);fill-opacity:1;stroke:#ffffff;stroke-width:2.93226;stroke-dasharray:none;stroke-opacity:1"
+           x="78.702156"
+           y="111.30753">Aquelarre</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24.0357px;font-family:'Wild Love';-inkscape-font-specification:'Wild Love';text-align:center;text-anchor:middle;fill:url(#linearGradient3458);fill-opacity:1;stroke:#ffffff;stroke-width:2.93226;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+         x="131.26498"
+         y="130.62497"
+         id="text367-2-3"><tspan
+           sodipodi:role="line"
+           id="tspan365-1-3"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Wild Love';-inkscape-font-specification:'Wild Love';fill:url(#linearGradient3458);fill-opacity:1;stroke:#ffffff;stroke-width:2.93226;stroke-dasharray:none;stroke-opacity:1"
+           x="134.05313"
+           y="130.62497">al salir de clase </tspan></text>
+    </g>
+  </g>
+</svg>
